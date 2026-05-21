@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ChevronDown, Loader2, Wrench, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { SearchResult } from "@/lib/mock-data";
+import type { SearchResult } from "@/lib/agui-types";
 
 export function ToolCallCard({
   name,
@@ -59,13 +59,10 @@ export function ToolCallCard({
           {results.map((r) => (
             <div key={r.url} className="px-3 py-2.5 hover:bg-panel/60 transition-colors">
               <div className="text-foreground text-[13px] leading-snug">{r.title}</div>
-              <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
-                className="text-[11px] text-mcp/90 hover:text-mcp underline-offset-2 hover:underline break-all"
-              >
-                {r.url}
-              </a>
+              {/* TODO(F3): once B1 returns absolute URLs (with protocol), render this as
+                  <a href={r.url} target="_blank" rel="noopener noreferrer"> so the link
+                  is actually navigable. Today the mock emits bare hostnames. */}
+              <span className="text-[11px] text-mcp/90 break-all">{r.url}</span>
               <div className="mt-1 text-[12px] text-muted leading-snug">{r.snippet}</div>
             </div>
           ))}
