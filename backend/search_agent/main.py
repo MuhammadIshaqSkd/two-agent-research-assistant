@@ -15,16 +15,21 @@ MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8001/sse")
 SEARCH_AGENT_HOST = os.getenv("SEARCH_AGENT_HOST", "127.0.0.1")
 SEARCH_AGENT_PORT = int(os.getenv("SEARCH_AGENT_PORT", "8002"))
 
-# --- Agent Card (A2A protocol) ---
+# --- Agent Card (A2A protocol) — aligned with contracts/agent_card.json ---
 AGENT_CARD = {
     "name": "Search Agent",
     "description": "Performs web search and returns structured results",
     "url": f"http://localhost:{SEARCH_AGENT_PORT}",
     "version": "1.0.0",
-    "capabilities": ["text"],
+    "capabilities": {
+        "streaming": False,
+        "pushNotifications": False,
+        "stateTransitionHistory": False,
+    },
     "skills": [
         {
             "id": "web_search",
+            "name": "Web Search",
             "description": "Search the web for a given query and return top results",
         }
     ],
@@ -167,7 +172,13 @@ async def receive_task_stream(task: TaskRequest):
                 "active_agent": "search",
                 "step": f"Searching for: {task.query}",
                 "tool_calls": [
-                    {"name": "web_search", "status": "running", "query": task.query}
+                    {
+                        "id": tool_call_id,
+                        "name": "web_search",
+                        "status": "running",
+                        "query": task.query,
+                        "resultsCount": None,
+                    }
                 ],
             },
         )
@@ -211,7 +222,13 @@ async def receive_task_stream(task: TaskRequest):
                 "active_agent": "search",
                 "step": "Search complete",
                 "tool_calls": [
-                    {"name": "web_search", "status": "done", "query": task.query}
+                    {
+                        "id": tool_call_id,
+                        "name": "web_search",
+                        "status": "done",
+                        "query": task.query,
+                        "resultsCount": len(search_results.get("results", [])),
+                    }
                 ],
             },
         )
