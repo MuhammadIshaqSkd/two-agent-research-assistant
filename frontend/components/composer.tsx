@@ -6,7 +6,7 @@ import { useAppState } from "@/components/app-state";
 import { cn } from "@/lib/utils";
 
 export function Composer() {
-  const { status, setStatus } = useAppState();
+  const { status, setStatus, appendUserMessage } = useAppState();
   const [value, setValue] = useState("");
   const ref = useRef<HTMLTextAreaElement>(null);
   const isStreaming = status === "streaming";
@@ -22,8 +22,11 @@ export function Composer() {
 
   function submit() {
     if (!canSend) return;
+    const nextMessage = value.trim();
+    if (!nextMessage) return;
     // F2 will wire this up to the Planner Agent. F1 flips status briefly so the
     // header pulse + activity flow react to the user's first send.
+    appendUserMessage(nextMessage);
     setStatus("streaming");
     setTimeout(() => setStatus("ready"), 1400);
     setValue("");

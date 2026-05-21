@@ -14,7 +14,7 @@ export function PanelsShell() {
   const { events, status } = useAppState();
 
   return (
-    <>
+    <div className="flex h-full min-h-0 flex-col">
       {/* Mobile / tablet tab bar — hidden on lg+ where both panels show */}
       <div
         role="tablist"
@@ -39,10 +39,7 @@ export function PanelsShell() {
 
       <div
         className="
-          grid min-h-0 gap-3 sm:gap-4
-          h-[calc(100vh-3rem-1.5rem-2.5rem)]
-          sm:h-[calc(100vh-3rem-2rem-2.5rem)]
-          lg:h-[calc(100vh-3rem-2.5rem)]
+          grid min-h-0 flex-1 gap-3 sm:gap-4
           grid-cols-1 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]
         "
       >
@@ -53,7 +50,7 @@ export function PanelsShell() {
           <ActivityPanel />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

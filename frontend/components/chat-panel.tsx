@@ -42,13 +42,34 @@ export function ChatPanel() {
         {messages.length === 0 ? (
           <EmptyState />
         ) : (
-          messages.map((m) => <ChatBubble key={m.id} message={m} />)
+          <>
+            {messages.map((m) => <ChatBubble key={m.id} message={m} />)}
+            {status === "streaming" && <StreamingPlaceholder />}
+          </>
         )}
       </div>
 
       {/* Composer */}
       <Composer />
     </section>
+  );
+}
+
+function StreamingPlaceholder() {
+  return (
+    <div className="flex gap-3 animate-fade-up">
+      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-panel-2 ring-1 ring-line text-[10.5px] font-semibold text-accent">
+        PL
+      </div>
+      <div className="min-w-0 flex-1 space-y-2">
+        <div className="flex items-baseline gap-2 text-[11px]">
+          <span className="text-muted">planner.agent</span>
+          <span className="text-warn">streaming</span>
+        </div>
+        <div className="h-3 w-2/3 rounded bg-panel-2/80 animate-pulse-soft" />
+        <div className="h-3 w-1/2 rounded bg-panel-2/70 animate-pulse-soft" />
+      </div>
+    </div>
   );
 }
 

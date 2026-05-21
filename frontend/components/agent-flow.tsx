@@ -113,14 +113,14 @@ function Connector({
           y1="6"
           x2="26"
           y2="6"
-          stroke={tone === "a2a" ? "rgb(103 232 249 / 0.75)" : "rgb(52 211 153 / 0.75)"}
+          stroke={tone === "a2a" ? "rgb(var(--a2a) / 0.75)" : "rgb(var(--mcp) / 0.75)"}
           strokeWidth="1.5"
           strokeDasharray="4 4"
           className={cn(animate && "animate-flow-dash")}
         />
         <polygon
           points="26,2 32,6 26,10"
-          fill={tone === "a2a" ? "rgb(103 232 249 / 0.85)" : "rgb(52 211 153 / 0.85)"}
+          fill={tone === "a2a" ? "rgb(var(--a2a) / 0.85)" : "rgb(var(--mcp) / 0.85)"}
         />
       </svg>
     </div>

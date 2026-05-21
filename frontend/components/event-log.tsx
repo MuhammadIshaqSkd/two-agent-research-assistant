@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 export function EventLog({ events }: { events: AgentEvent[] }) {
   return (
     <ol className="space-y-2 px-3 sm:px-4 pb-4" aria-label="Agent event log">
-      {events.map((e, i) => (
-        <EventRow key={e.id} event={e} last={i === events.length - 1} />
+      {events.map((e) => (
+        <EventRow key={e.id} event={e} last={e.id === events.at(-1)?.id} />
       ))}
     </ol>
   );

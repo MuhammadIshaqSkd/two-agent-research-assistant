@@ -5,6 +5,8 @@ import { StatusPill } from "@/components/status-pill";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useAppState } from "@/components/app-state";
 
+const PILLS = ["MCP", "A2A", "AG-UI", "CopilotKit"] as const;
+
 export function ConsoleHeader() {
   const { status } = useAppState();
 
@@ -25,20 +27,11 @@ export function ConsoleHeader() {
           </span>
         </div>
 
-        {/* Protocol pills (center on desktop, scrollable on mobile) */}
-        <div className="ml-2 hidden flex-1 items-center justify-center gap-1.5 md:flex">
-          <ProtocolPill name="MCP" />
-          <ProtocolPill name="A2A" />
-          <ProtocolPill name="AG-UI" />
-          <ProtocolPill name="CopilotKit" />
-        </div>
-
-        {/* Mobile: horizontal scroll pills */}
-        <div className="ml-1 flex flex-1 items-center gap-1.5 overflow-x-auto md:hidden">
-          <ProtocolPill name="MCP" />
-          <ProtocolPill name="A2A" />
-          <ProtocolPill name="AG-UI" />
-          <ProtocolPill name="CopilotKit" />
+        {/* Protocol pills */}
+        <div className="mobile-pill-fade ml-1 flex flex-1 items-center gap-1.5 overflow-x-auto md:ml-2 md:justify-center md:overflow-visible">
+          {PILLS.map((pill) => (
+            <ProtocolPill key={pill} name={pill} />
+          ))}
         </div>
 
         {/* Right cluster */}

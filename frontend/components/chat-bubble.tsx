@@ -16,7 +16,7 @@ export function ChatBubble({ message }: { message: ChatMessage }) {
   return (
     <div className="flex gap-3 animate-fade-up">
       <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-panel-2 ring-1 ring-line text-[10.5px] font-semibold text-accent">
-        {message.agent === "planner" ? "PL" : "SR"}
+        {message.agent === "planner" ? "PL" : "SE"}
       </div>
       <div className="min-w-0 flex-1 space-y-2">
         <div className="flex items-baseline gap-2 text-[11px]">

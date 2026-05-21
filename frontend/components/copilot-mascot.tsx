@@ -19,7 +19,10 @@ export function CopilotMascot({ className }: { className?: string }) {
           <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-ok ring-2 ring-panel-2" />
         </span>
       </span>
-      <span className="grid h-9 w-9 place-items-center rounded-full bg-panel-2 ring-1 ring-line shadow-lg shadow-black/30 text-copilot font-bold text-[14px]">
+      <span
+        title="CopilotKit Copilot"
+        className="grid h-9 w-9 place-items-center rounded-full bg-panel-2 ring-1 ring-line shadow-lg shadow-black/30 text-copilot font-bold text-[14px]"
+      >
         G
       </span>
     </div>
