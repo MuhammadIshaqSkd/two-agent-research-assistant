@@ -16,7 +16,13 @@ FastAPI + FastMCP backend for the Two-Agent Research Assistant POC.
 ```bash
 cd backend
 py -m venv venv
+
+# Windows
 venv\Scripts\activate
+
+# Unix / macOS
+source venv/bin/activate
+
 pip install -r requirements.txt
 ```
 
