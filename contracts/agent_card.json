@@ -1,0 +1,13 @@
+{
+  "name": "Search Agent",
+  "description": "Performs web search and returns structured results",
+  "url": "http://localhost:8002",
+  "version": "1.0.0",
+  "capabilities": ["text"],
+  "skills": [
+    {
+      "id": "web_search",
+      "description": "Search the web for a given query and return top results"
+    }
+  ]
+}
