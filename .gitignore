@@ -1,20 +1,64 @@
-# Python
+# ─────────────────────────────────────────────
+# Repo-root .gitignore
+# Frontend-specific patterns live in frontend/.gitignore
+# Backend-specific patterns live alongside backend/ if needed
+# ─────────────────────────────────────────────
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python (backend/ MCP server, agents)
 __pycache__/
 *.py[cod]
 *.pyo
+*$py.class
 *.egg-info/
-dist/
-build/
+.venv/
 venv/
-.env
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .coverage
 htmlcov/
+*.pyc
 
-# IDE
-.vscode/
-.idea/
+# Env / secrets
+.env
+.env.*
+!.env.example
 
-# OS
-.DS_Store
-Thumbs.db
+# Docker (compose .env files)
+docker-compose.override.yml
+
+# ─────────────────────────────────────────────
+# Azurite — Azure Storage Emulator.
+# If VS Code's Azurite extension auto-starts in the workspace,
+# it dumps these files into whichever folder it was started from.
+# ─────────────────────────────────────────────
+__azurite_db_*.json
+__azurite_db_*_extent__.json
+__blobstorage__/
+__queuestorage__/
+__tablestorage__/
+azurite-debug.log
+
+# Generic local build/cache
+dist/
+build/
+.cache/
+.tmp/
