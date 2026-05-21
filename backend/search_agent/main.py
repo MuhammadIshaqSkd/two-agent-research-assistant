@@ -153,22 +153,33 @@ async def receive_task_stream(task: TaskRequest):
     async def event_stream():
         tool_call_id = str(uuid.uuid4())
 
-        yield sse_event("STEP_STARTED", {
-            "name": "Searching the web",
-            "task_id": task.task_id,
-        })
+        yield sse_event(
+            "STEP_STARTED",
+            {
+                "name": "Searching the web",
+                "task_id": task.task_id,
+            },
+        )
 
-        yield sse_event("STATE_DELTA", {
-            "active_agent": "search",
-            "step": f"Searching for: {task.query}",
-            "tool_calls": [{"name": "web_search", "status": "running", "query": task.query}],
-        })
+        yield sse_event(
+            "STATE_DELTA",
+            {
+                "active_agent": "search",
+                "step": f"Searching for: {task.query}",
+                "tool_calls": [
+                    {"name": "web_search", "status": "running", "query": task.query}
+                ],
+            },
+        )
 
-        yield sse_event("TOOL_CALL_START", {
-            "tool_call_id": tool_call_id,
-            "tool_name": "web_search",
-            "arguments": {"query": task.query},
-        })
+        yield sse_event(
+            "TOOL_CALL_START",
+            {
+                "tool_call_id": tool_call_id,
+                "tool_name": "web_search",
+                "arguments": {"query": task.query},
+            },
+        )
 
         # Call MCP Tool Server
         try:
@@ -176,29 +187,43 @@ async def receive_task_stream(task: TaskRequest):
                 result = await mcp_client.call_tool("web_search", {"query": task.query})
                 search_results = result.data if result.data else {}
         except Exception as e:
-            yield sse_event("ERROR", {
-                "task_id": task.task_id,
-                "message": f"MCP Tool Server call failed: {str(e)}",
-            })
+            yield sse_event(
+                "ERROR",
+                {
+                    "task_id": task.task_id,
+                    "message": f"MCP Tool Server call failed: {str(e)}",
+                },
+            )
             return
 
-        yield sse_event("TOOL_CALL_END", {
-            "tool_call_id": tool_call_id,
-            "tool_name": "web_search",
-            "result": search_results,
-        })
+        yield sse_event(
+            "TOOL_CALL_END",
+            {
+                "tool_call_id": tool_call_id,
+                "tool_name": "web_search",
+                "result": search_results,
+            },
+        )
 
-        yield sse_event("STATE_DELTA", {
-            "active_agent": "search",
-            "step": "Search complete",
-            "tool_calls": [{"name": "web_search", "status": "done", "query": task.query}],
-        })
+        yield sse_event(
+            "STATE_DELTA",
+            {
+                "active_agent": "search",
+                "step": "Search complete",
+                "tool_calls": [
+                    {"name": "web_search", "status": "done", "query": task.query}
+                ],
+            },
+        )
 
-        yield sse_event("STEP_FINISHED", {
-            "name": "Searching the web",
-            "task_id": task.task_id,
-            "result": search_results,
-        })
+        yield sse_event(
+            "STEP_FINISHED",
+            {
+                "name": "Searching the web",
+                "task_id": task.task_id,
+                "result": search_results,
+            },
+        )
 
     return StreamingResponse(
         event_stream(),
