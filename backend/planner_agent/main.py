@@ -71,7 +71,7 @@ async def synthesize_answer(query: str, search_results: dict) -> str:
                     }
                 ],
             )
-            return response.content[0].text
+            return response.content[0].text  # type: ignore[union-attr]
         except Exception as e:
             return f"LLM call failed ({e}). Falling back to summary: Based on research about '{query}', multiple sources confirm significant developments in this area."
     else:
